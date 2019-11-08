@@ -26,19 +26,41 @@ public class GenesisVectorTable extends GhidraScript {
     private static final long PTR_PROGRAM_START  = 0x4;
     private static final long PTR_HBLANK         = 0x70;
     private static final long PTR_VBLANK         = 0x78;
-    private static final int VDP_DATA            = 0x00C00000;
-    private static final int VDP_CONTROL         = 0x00C00004;
-    private static final int VDP_COUNTER         = 0x00C00008;
+    // Address blocks
+    private static final int CART_ADDRESS_SPACE  = 0x00000000;
+    private static final int SCD_ADDRESS_SPACE   = 0x00400000;
+    private static final int S32X_ADDRESS_SPACE  = 0x00800000;
+    private static final int Z80_ADDRESS_SPACE   = 0x00A00000;
+    private static final int IO_ADDRESS_SPACE    = 0x00A10000;
+    private static final int VDP_ADDRESS_SPACE   = 0x00C00000;
+    private static final int M68K_ADDRESS_SPACE  = 0x00FF0000;
+    // Labels
+    private static final int REG_HWVERSION       = 0x00A10001;
     private static final int CTRL_1_DATA         = 0x00A10003;
     private static final int CTRL_1_CONTROL      = 0x00A10009;
     private static final int CTRL_2_DATA         = 0x00A10005;
     private static final int CTRL_2_CONTROL      = 0x00A1000B;
-    private static final int REG_HWVERSION       = 0x00A10001;
-    private static final int REG_TMS             = 0x00A14000;
-    private static final int PSG_INPUT           = 0x00C00011;
-    private static final int Z80_ADDRESS_SPACE   = 0x00A10000;
+    private static final int EXT_DATA            = 0x00A10007;
+    private static final int EXT_CONTROL         = 0x00A1000D;
+    private static final int CTRL_1_SERIAL_SEND  = 0x00A1000F;
+    private static final int CTRL_1_SERIAL_RECV  = 0x00A10011;
+    private static final int CTRL_1_SERIAL_CTRL  = 0x00A10013;
+    private static final int CTRL_2_SERIAL_SEND  = 0x00A10015;
+    private static final int CTRL_2_SERIAL_RECV  = 0x00A10017;
+    private static final int CTRL_2_SERIAL_CTRL  = 0x00A10019;
+    private static final int EXT_SERIAL_SEND     = 0x00A1001B;
+    private static final int EXT_SERIAL_RECV     = 0x00A1001D;
+    private static final int EXT_SERIAL_CTRL     = 0x00A1001F;
+
     private static final int Z80_BUS             = 0x00A11100;
     private static final int Z80_RESET           = 0x00A11200;
+
+    private static final int REG_TMS             = 0x00A14000;
+
+    private static final int VDP_DATA            = 0x00C00000;
+    private static final int VDP_CONTROL         = 0x00C00004;
+    private static final int VDP_COUNTER         = 0x00C00008;
+    private static final int PSG_INPUT           = 0x00C00011;
 
     // Members
     private Address currAddr = null;
@@ -245,16 +267,29 @@ public class GenesisVectorTable extends GhidraScript {
         createLabel(toAddr(VDP_CONTROL), "VDP_CONTROL", true);
         createLabel(toAddr(VDP_COUNTER), "VDP_COUNTER", true);
         createLabel(toAddr(VDP_DATA), "VDP_DATA", true);
+        createLabel(toAddr(IO_ADDRESS_SPACE), "IO_ADDRESS_SPACE", true);
         createLabel(toAddr(CTRL_1_CONTROL), "CTRL_1_CONTROL", true);
         createLabel(toAddr(CTRL_1_DATA), "CTRL_1_DATA", true);
         createLabel(toAddr(CTRL_2_CONTROL), "CTRL_2_CONTROL", true);
         createLabel(toAddr(CTRL_2_DATA), "CTRL_2_DATA", true);
+        createLabel(toAddr(EXT_CONTROL), "EXT_CONTROL", true);
+        createLabel(toAddr(EXT_DATA), "EXT_DATA", true);
+        createLabel(toAddr(CTRL_1_SERIAL_SEND), "CTRL_1_SERIAL_SEND", true);
+        createLabel(toAddr(CTRL_1_SERIAL_RECV), "CTRL_1_SERIAL_RECV", true);
+        createLabel(toAddr(CTRL_1_SERIAL_CTRL), "CTRL_1_SERIAL_CTRL", true);
+        createLabel(toAddr(CTRL_2_SERIAL_SEND), "CTRL_2_SERIAL_SEND", true);
+        createLabel(toAddr(CTRL_2_SERIAL_RECV), "CTRL_2_SERIAL_RECV", true);
+        createLabel(toAddr(CTRL_2_SERIAL_CTRL), "CTRL_2_SERIAL_CTRL", true);
+        createLabel(toAddr(EXT_SERIAL_SEND), "EXT_SERIAL_SEND", true);
+        createLabel(toAddr(EXT_SERIAL_RECV), "EXT_SERIAL_RECV", true);
+        createLabel(toAddr(EXT_SERIAL_CTRL), "EXT_SERIAL_CTRL", true);
         createLabel(toAddr(REG_HWVERSION), "REG_HWVERSION", true);
         createLabel(toAddr(REG_TMS), "REG_TMS", true);
         createLabel(toAddr(PSG_INPUT), "PSG_INPUT", true);
         createLabel(toAddr(Z80_ADDRESS_SPACE), "Z80_ADDRESS_SPACE", true);
         createLabel(toAddr(Z80_BUS), "Z80_BUS", true);
         createLabel(toAddr(Z80_RESET), "Z80_RESET", true);
+        createLabel(toAddr(M68K_ADDRESS_SPACE), "M68K_ADDRESS_SPACE", true);
     }
 
     /**
